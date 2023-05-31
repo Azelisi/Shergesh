@@ -2,10 +2,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import  HomeScreen  from '../components/HomeScreen';
 import  SettingsScreen  from '../components/SettingsScreen';
 import UserProfile from '../components/UserProfile';
+import Route from '../components/Route';
 import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet,Image } from 'react-native';
 
 
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function Navigation() {
@@ -46,6 +48,9 @@ export default function Navigation() {
                 />
             ),
         }} />
+        </Tab.Navigator>
+        <Tab.Navigator>
+        <Stack.Screen name="Маршрут" component={Route} />
         </Tab.Navigator>
       </NavigationContainer>
     );

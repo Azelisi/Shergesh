@@ -1,15 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text } from 'react-native';
 import { SafeAreaProvider,SafeAreaView } from 'react-native-safe-area-context';
-import Navigation from './app/navigation/Navigation';
 
 
-export default function App() {
+export default function Route() {
   return (
-    <SafeAreaProvider>
-      <Navigation/>
-        <StatusBar style='black' />
-    </SafeAreaProvider>
+    <View style={styles.container}>
+        <Text>SettingsScreen </Text>
+        </View>
   );
 }
 

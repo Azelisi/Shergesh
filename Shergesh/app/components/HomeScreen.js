@@ -1,25 +1,56 @@
-import { View, Text,StyleSheet } from "react-native"
-import { YaMap } from "react-native-yamap";
+import React, { useEffect, useState } from 'react';
+import { View, Text, Button } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 
-YaMap.init('2d8a6e59-1e8c-409d-885a-ec2ae0abe7c3');
+export default function MapPage() {
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [hotels, setHotels] = useState([]);
+  const [attractions, setAttractions] = useState([]);
 
-export default function HomeScreen() {
-    return (
-      <YMaps>
-      <div>My awesome application with maps!</div>
-      <Map defaultState={{ center: [55.75, 37.57], zoom: 9 }} />
-    </YMaps>
-    );
-  }
-    
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },map: {
-      width: '100%',
-      height: '100%',
-    },
-  });
+  useEffect(() => {
+    // Здесь вы можете добавить логику для загрузки данных отелей и достопримечательностей из API
+    // и сохранения их в состоянии hotels и attractions
+    // Пример загрузки данных с использованием fetch:
+    fetch('http://engine.hotellook.com/api/v2/lookup.json?query=Novosibirsk&lang=ru&lookFor=both&limit=10')
+      .then(response => response.json())
+      .then(data => {
+        const hotel = data.results.hotels[0];
+        setHotels([hotel]);
+      });
+
+    // fetch('https://api.example.com/attractions')
+    //   .then(response => response.json())
+    //   .then(data => setAttractions(data));
+  }, []);
+
+  const handleNavigate = () => {
+    if (selectedLocation) {
+      // Здесь вы можете добавить логику для расчета маршрута с учетом отелей и достопримечательностей
+      // и перехода на страницу с маршрутом
+      navigation.navigate('Маршрут', { location: selectedLocation });
+    }
+  };
+
+  return (
+    <View style={{ flex: 1 }}>
+      <MapView style={{ flex: 1 }} initialRegion={{ latitude: 37.78825, longitude: -122.4324, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}>
+        {/* Маркеры для отелей */}
+        {hotels.map(hotel => (
+          <Marker key={hotel.id} coordinate={{ latitude: hotel.location.lat, longitude: hotel.location.lon }} title={hotel.label} />
+        ))}
+        {/* Маркеры для достопримечательностей */}
+        {attractions.map(attraction => (
+          <Marker key={attraction.id} coordinate={{ latitude: attraction.latitude, longitude: attraction.longitude }} title={attraction.name} />
+        ))}
+        {/* Маркер для выбранного места */}
+        {selectedLocation && (
+          <Marker coordinate={{ latitude: selectedLocation.latitude, longitude: selectedLocation.longitude }} title="Выбранное место" />
+        )}
+      </MapView>
+      <View style={{ padding: 16 }}>
+        <Text style={{ marginBottom: 8 }}>Выберите место на карте:</Text>
+        <Button title="Выбрать" onPress={handleNavigate} />
+      </View>
+    </View>
+  );
+}
