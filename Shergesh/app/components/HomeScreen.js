@@ -1,11 +1,14 @@
 import { View, Text,StyleSheet } from "react-native"
-import MapView from 'react-native-maps';
+import { YaMap } from "react-native-yamap";
+
+YaMap.init('2d8a6e59-1e8c-409d-885a-ec2ae0abe7c3');
 
 export default function HomeScreen() {
     return (
-        <View style={styles.container}>
-        <MapView style={styles.map} />
-        </View>
+      <YMaps>
+      <div>My awesome application with maps!</div>
+      <Map defaultState={{ center: [55.75, 37.57], zoom: 9 }} />
+    </YMaps>
     );
   }
     
