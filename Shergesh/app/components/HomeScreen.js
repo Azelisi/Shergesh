@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import {  SearchBar } from "react-native-elements";
+
 
 export default function MapPage({ navigation }) {
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -34,16 +36,27 @@ export default function MapPage({ navigation }) {
     };
     return routeData;
   };
-
-  const handleNavigate = () => {
-    if (selectedLocation) {
-      const routeData = calculateRoute();
-      navigation.navigate('Маршрут', { routeData });
-    }
+  state = {
+    search: '',
   };
-
+  updateSearch = (search) => {
+    this.setState({ search });
+  };
+  
+  const { search } = this.state;
   return (
     <View style={{ flex: 1 }}>
+      <View style={{
+        marginTop: 30,
+        padding: 2}}>
+        <SearchBar
+          placeholder="Найти место"
+          lightTheme
+          onChangeText={this.updateSearch}
+          value={search}
+          round
+          containerStyle={{backgroundColor: 'white'}}
+        /></View>
       <MapView style={{ flex: 1 }} initialRegion={{ latitude: 55.034214, longitude: 82.906211, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}>
         {/* Маркеры для отелей */}
         {hotels.map(hotel => (
@@ -58,10 +71,7 @@ export default function MapPage({ navigation }) {
           <Marker coordinate={{ latitude: selectedLocation.latitude, longitude: selectedLocation.longitude }} title="Выбранное место" />
         )}
       </MapView>
-      <View style={{ padding: 16 }}>
-        <Text style={{ marginBottom: 8 }}>Выберите место на карте:</Text>
-        <Button title="Выбрать" onPress={handleNavigate} />
-      </View>
+ 
     </View>
   );
 }

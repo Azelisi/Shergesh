@@ -59,13 +59,13 @@ const styles = StyleSheet.create({
   },
   trip: {
     fontSize: 14,
-    marginBottom: 4,
+    marginBottom: 20,
   },
   editButton: {
-    backgroundColor: '#2196F3',
+    borderRadius:10,
+    backgroundColor:'#006666',
     paddingVertical: 8,
     paddingHorizontal: 16,
-    borderRadius: 4,
     marginTop: 16,
   },
   editButtonText: {

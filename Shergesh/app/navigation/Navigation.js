@@ -10,7 +10,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet,Image } from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { AuthContext } from '../components/AuthContext';
-import ProfileEdit from '../components/pages/ProfileEdit'
+import ProfileEdit from '../components/pages/ProfileEdit';
 
 
 const Stack = createNativeStackNavigator();
@@ -61,9 +61,10 @@ export default function Navigation() {
         </Tab.Navigator>
           ) : ( <Stack.Navigator
             screenOptions={{
+               headerShown: false,
                 headerMode: 'screen',
                 headerTintColor: 'white',
-                headerStyle: { backgroundColor: '#616161' },
+                
             }}
         >
             <Stack.Screen name="Вход" component={Auth} />
