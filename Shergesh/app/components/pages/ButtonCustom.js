@@ -1,24 +1,18 @@
-import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import ButtonComponent from './ButtonCustom'
 
-export default function Auth({ navigation }) {
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+
+const ButtonComponent = ({ text, path, navigation }) => {
     return (
-        <View style={styles.container}>
-            <View style={styles.textContainer}>
-                <Text style={styles.headerText}>Зарегистрируйтесь в приложении</Text>
-            </View>
-            <ButtonComponent text="Войти" path="Авторизация" navigation={navigation} />
-            <TouchableOpacity onPress={() => navigation.navigate('Авторизация')} style={styles.signInButton}>
-                <Text style={styles.signInButtonText}>У меня уже есть аккаунт  </Text>
-            </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={() => navigation.navigate(path)} style={styles.portalButton}>
+            <Text style={styles.portalButtonText}>{text}</Text>
+        </TouchableOpacity>
     );
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#616161',
         alignItems: 'center',
     },
     textContainer: {
@@ -27,6 +21,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
         textAlign: 'center',
+        color: 'white',
         fontSize: 28,
         fontFamily: 'Roboto',
     },
@@ -34,6 +29,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#78DBE2',
         borderRadius: 6,
         width: 330,
         height: 50,
@@ -46,13 +42,19 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     portalButtonText: {
+        color: 'white',
         fontSize: 14,
         fontWeight: 'medium',
         fontFamily: 'Roboto',
     },
     signInButton: {
+        backgroundColor: 'transparent',
+        marginBottom: 15,
+    },
+    signInButtonText: {
+        color: 'white',
         fontSize: 14,
         top: 200,
     },
-    
 });
+export default ButtonComponent;

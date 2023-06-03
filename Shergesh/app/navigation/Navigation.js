@@ -2,17 +2,27 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import  HomeScreen  from '../components/HomeScreen';
 import  SettingsScreen  from '../components/SettingsScreen';
 import UserProfile from '../components/UserProfile';
-import Route from '../components/Route';
+import RouteMap from '../components//pages/RouteMap';
+import Auth from '../components/pages/Auth';
+import Reg from '../components/pages/Reg';
+import { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet,Image } from 'react-native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { AuthContext } from '../components/AuthContext';
+import ProfileEdit from '../components/pages/ProfileEdit'
 
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function Navigation() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
     return (
+      <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
       <NavigationContainer>
+        
+        {isAuthenticated ? (
         <Tab.Navigator screenOptions={{
                             tabBarShowLabel: false,
                             tabBarActiveTintColor: 'black',
@@ -49,10 +59,20 @@ export default function Navigation() {
             ),
         }} />
         </Tab.Navigator>
-        <Tab.Navigator>
-        <Stack.Screen name="Маршрут" component={Route} />
-        </Tab.Navigator>
+          ) : ( <Stack.Navigator
+            screenOptions={{
+                headerMode: 'screen',
+                headerTintColor: 'white',
+                headerStyle: { backgroundColor: '#616161' },
+            }}
+        >
+            <Stack.Screen name="Вход" component={Auth} />
+            <Stack.Screen name="Авторизация" component={Reg} />
+            <Stack.Screen name="Edit" component={ProfileEdit} />
+        </Stack.Navigator>
+    )}
       </NavigationContainer>
+      </AuthContext.Provider>
     );
   }
   
