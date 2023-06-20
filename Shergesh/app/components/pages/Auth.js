@@ -1,17 +1,20 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ImageBackground, StatusBar } from 'react-native';
 import ButtonComponent from './ButtonCustom'
 
 export default function Auth({ navigation }) {
     return (
         <View style={styles.container}>
+            <ImageBackground source={require('../../assets/img/rock.jpg')} resizeMode='cover' style={styles.image}> 
             <View style={styles.textContainer}>
                 <Text style={styles.headerText}>Зарегистрируйтесь в приложении</Text>
             </View>
+            <StatusBar barStyle="auto"/>
             <ButtonComponent text="Войти" path="Авторизация" navigation={navigation} />
             <TouchableOpacity onPress={() => navigation.navigate('Авторизация')} style={styles.signInButton}>
                 <Text style={styles.signInButtonText}>У меня уже есть аккаунт  </Text>
             </TouchableOpacity>
+            </ImageBackground>
         </View>
     );
 }
@@ -19,6 +22,13 @@ export default function Auth({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    image:{
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     textContainer: {
@@ -29,6 +39,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 28,
         fontFamily: 'Roboto',
+        color: 'white',
     },
     portalButton: {
         flexDirection: 'row',
@@ -38,7 +49,7 @@ const styles = StyleSheet.create({
         width: 330,
         height: 50,
         marginBottom: 26,
-        top: 200,
+        marginTop: 200,
     },
     portalIcon: {
         width: 24,
@@ -52,7 +63,10 @@ const styles = StyleSheet.create({
     },
     signInButton: {
         fontSize: 14,
-        top: 200,
+        marginTop: 400,
     },
+    signInButtonText:{
+        color: 'white',
+    }
     
 });
